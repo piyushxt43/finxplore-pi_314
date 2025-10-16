@@ -939,4 +939,4 @@ export const moduleContent: Record<string, ModuleContent> = {
 
 export function getModuleContent(moduleId: string): ModuleContent | null {
   return moduleContent[moduleId] || null;
-}np
+}
