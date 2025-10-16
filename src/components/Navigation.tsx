@@ -48,15 +48,30 @@ const Navigation = () => {
   const handleSignIn = async () => {
     try {
       console.log("Starting Google sign-in...");
+      console.log("Firebase config:", {
+        apiKey: import.meta.env.VITE_FIREBASE_API_KEY ? "✅ Set" : "❌ Missing",
+        authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN ? "✅ Set" : "❌ Missing",
+        projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID ? "✅ Set" : "❌ Missing"
+      });
       
-      // Try popup first
-      const result = await signInWithPopup(auth, googleProvider);
-      console.log("Sign-in successful:", result.user);
+      // Try popup first with timeout
+      const signInPromise = signInWithPopup(auth, googleProvider);
+      const timeoutPromise = new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('Sign-in timeout')), 30000)
+      );
+      
+      const result = await Promise.race([signInPromise, timeoutPromise]);
+      console.log("Sign-in successful:", result);
       
     } catch (error: any) {
       console.error("Sign-in error:", error);
       
       // Handle specific error cases
+      if (error.message === 'Sign-in timeout') {
+        alert("Sign-in is taking too long. Please try again.");
+        return;
+      }
+      
       if (error.code === 'auth/popup-blocked') {
         console.log("Popup blocked, trying redirect...");
         try {
@@ -68,14 +83,19 @@ const Navigation = () => {
         }
       } else if (error.code === 'auth/popup-closed-by-user') {
         console.log("User closed popup");
-        // Don't show error for user closing popup
         return;
       } else if (error.code === 'auth/cancelled-popup-request') {
         console.log("Popup request cancelled");
         return;
+      } else if (error.code === 'auth/network-request-failed') {
+        alert("Network error. Please check your internet connection and try again.");
+      } else if (error.code === 'auth/too-many-requests') {
+        alert("Too many failed attempts. Please try again later.");
+      } else if (error.code === 'auth/operation-not-allowed') {
+        alert("Google sign-in is not enabled. Please contact support.");
       } else {
         console.error("Other sign-in error:", error);
-        alert("Sign-in failed. Please try again.");
+        alert(`Sign-in failed: ${error.message || 'Unknown error'}. Please try again.`);
       }
     }
   };

@@ -35,8 +35,12 @@ export const auth = getAuth(app);
 export const googleProvider = new GoogleAuthProvider();
 googleProvider.addScope('email');
 googleProvider.addScope('profile');
-// Remove the problematic prompt parameter that can cause auth issues
-// googleProvider.setCustomParameters({ prompt: "select_account" });
+
+// Configure provider for better compatibility
+googleProvider.setCustomParameters({
+  prompt: 'consent', // Force consent screen for better reliability
+  access_type: 'offline'
+});
 
 export const db = getFirestore(app);
 
