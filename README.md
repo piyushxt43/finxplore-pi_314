@@ -6,6 +6,9 @@ Fin Quest India is a comprehensive financial education platform designed specifi
 
 ![Fin Quest India](https://img.shields.io/badge/Version-1.0.0-blue) ![React](https://img.shields.io/badge/React-18.3.1-blue) ![TypeScript](https://img.shields.io/badge/TypeScript-5.8.3-blue) ![Firebase](https://img.shields.io/badge/Firebase-12.4.0-orange)
 
+
+MADE BY - PIYUSH SINGH ( https://www.linkedin.com/in/piyush-singh-023507359?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app  )
+ &        Azzah-mallick ( https://www.linkedin.com/in/azzah-mallick-6192b21b0?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app )
 ## 📋 Table of Contents
 
 - [🎯 Features](#-features)
