@@ -1,15 +1,13 @@
 Fin Quest India is an interactive, gamified financial learning platform built for Indian investors and learners. Below is a more decorated, engaging, and beginner-friendly README styled for GitHub, introducing the platform, its core features, and technical details. Your requested repo link is updated.
 
+MADE BY - PIYUSH SINGH ( https://www.linkedin.com/in/piyush-singh-023507359?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app  )
+ &        Azzah-mallick ( https://www.linkedin.com/in/azzah-mallick-6192b21b0?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app )
 ***
 
 # 🚀 Fin Quest India — FinXplore
 
 **Unlock the Financial Markets, Level Up Your Knowledge, and Lead the Game!**
 
-[![Version](https://img.shields.io/badge
-[![React](https://img.shields.io/badge
-[![TypeScript](https://img.shields.io/badge/TypeScript
-[![Firebase](https://img.shields.io/badge/Firebase
 
 ## 📌 About Fin Quest India
 
