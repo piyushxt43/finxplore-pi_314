@@ -20,7 +20,11 @@ const missingConfigKeys = requiredConfigKeys.filter(key => !firebaseConfig[key])
 
 if (missingConfigKeys.length > 0) {
   console.error('Missing Firebase configuration:', missingConfigKeys);
-  throw new Error(`Missing required Firebase configuration: ${missingConfigKeys.join(', ')}`);
+  console.warn('Firebase configuration is incomplete. Please set the required environment variables.');
+  // Don't throw error in development - just warn
+  if (import.meta.env.PROD) {
+    throw new Error(`Missing required Firebase configuration: ${missingConfigKeys.join(', ')}`);
+  }
 }
 
 const app = initializeApp(firebaseConfig);
