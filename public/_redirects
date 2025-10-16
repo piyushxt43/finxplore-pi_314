@@ -1,0 +1,5 @@
+# Netlify SPA redirects
+/*    /index.html   200
+
+# Cache static assets
+/assets/*  200
