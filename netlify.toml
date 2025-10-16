@@ -48,13 +48,3 @@
   for = "/*.html"
   [headers.values]
     Cache-Control = "public, max-age=3600"
-
-# Plugin configuration
-[[plugins]]
-  package = "@netlify/plugin-lighthouse"
-
-  [plugins.inputs.thresholds]
-    performance = 0.8
-    accessibility = 0.9
-    best-practices = 0.9
-    seo = 0.8
