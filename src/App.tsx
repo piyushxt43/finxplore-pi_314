@@ -7,6 +7,7 @@ import Navigation from "./components/Navigation";
 import Index from "./pages/Index";
 import Learn from "./pages/Learn";
 import ModuleDetail from "./pages/ModuleDetail";
+import LessonDetail from "./pages/LessonDetail";
 import Simulations from "./pages/Simulations";
 import SimulationDetail from "./pages/SimulationDetail";
 import Leaderboard from "./pages/Leaderboard";
@@ -20,6 +21,7 @@ import Onboarding from "./pages/Onboarding";
 import { useEffect } from "react";
 import { auth } from "./lib/firebase";
 import { useUserProfile } from "./hooks/use-user-profile";
+import { DebugInfo } from "./components/DebugInfo";
 
 const queryClient = new QueryClient();
 
@@ -40,7 +42,8 @@ const AppRoutes = () => {
     <Routes>
       <Route path="/" element={<Index />} />
       <Route path="/learn" element={<Learn />} />
-      <Route path="/learn/:moduleId" element={<ModuleDetail />} />
+      <Route path="/module/:moduleId" element={<ModuleDetail />} />
+      <Route path="/lesson/:moduleId/:lessonId" element={<LessonDetail />} />
       <Route path="/simulations" element={<Simulations />} />
       <Route path="/simulations/:simulationId" element={<SimulationDetail />} />
       <Route path="/leaderboard" element={<Leaderboard />} />
@@ -64,6 +67,7 @@ const App = () => (
         <div className="min-h-screen bg-background font-body">
           <Navigation />
           <AppRoutes />
+          <DebugInfo />
         </div>
       </BrowserRouter>
     </TooltipProvider>

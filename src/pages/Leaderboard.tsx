@@ -2,9 +2,22 @@ import { leaderboardUsers, badges } from "@/data/leaderboard";
 import { Trophy, Medal, Award, Flame, MapPin, Zap } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useUserProfile } from "@/hooks/use-user-profile";
+import { calculateLevel } from "@/lib/level-utils";
 
 const Leaderboard = () => {
-  const currentUser = {
+  const { profile, user } = useUserProfile();
+  
+  // Use real user data if logged in, otherwise show demo data
+  const currentUser = profile ? {
+    rank: 127, // This would be calculated from real leaderboard data
+    xp: profile.xp,
+    level: profile.level,
+    streak: 12, // This would be tracked in user profile
+    nextLevelXp: calculateLevel(profile.xp).xpToNextLevel,
+    badgesEarned: profile.badges?.length || 0,
+    totalBadges: 45,
+  } : {
     rank: 127,
     xp: 3450,
     level: 18,
@@ -14,7 +27,7 @@ const Leaderboard = () => {
     totalBadges: 45,
   };
 
-  const progressToNextLevel = ((currentUser.xp % 1000) / 1000) * 100;
+  const progressToNextLevel = profile ? calculateLevel(profile.xp).progressPercentage : ((currentUser.xp % 1000) / 1000) * 100;
 
   return (
     <div className="container mx-auto px-4 py-12">
@@ -29,15 +42,16 @@ const Leaderboard = () => {
         </p>
       </div>
 
-      {/* Your Rank Card */}
-      <div className="glass-card p-8 rounded-xl mb-8 border-2 border-primary/30 bg-primary/5">
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-2xl font-heading font-bold">Your Rank</h2>
-          <div className="flex items-center gap-2">
-            <Flame className="w-5 h-5 text-primary animate-glow-pulse" />
-            <span className="text-xl font-bold text-primary">{currentUser.streak} day streak</span>
+      {/* Your Rank Card - Only show if user is logged in */}
+      {profile && (
+        <div className="glass-card p-8 rounded-xl mb-8 border-2 border-primary/30 bg-primary/5">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-2xl font-heading font-bold">Your Rank</h2>
+            <div className="flex items-center gap-2">
+              <Flame className="w-5 h-5 text-primary animate-glow-pulse" />
+              <span className="text-xl font-bold text-primary">{currentUser.streak} day streak</span>
+            </div>
           </div>
-        </div>
         
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           <div className="text-center">
@@ -72,7 +86,18 @@ const Leaderboard = () => {
             <div className="text-sm text-muted-foreground">Badges Earned</div>
           </div>
         </div>
-      </div>
+        </div>
+      )}
+
+      {/* Show demo leaderboard only if no user is logged in */}
+      {!profile && (
+        <div className="glass-card p-8 rounded-xl mb-8 text-center">
+          <h2 className="text-2xl font-heading font-bold mb-4">Demo Leaderboard</h2>
+          <p className="text-muted-foreground mb-6">
+            Sign in to see your real rank and compete with other learners!
+          </p>
+        </div>
+      )}
 
       {/* Tabs */}
       <Tabs defaultValue="weekly" className="mb-8">
@@ -84,15 +109,15 @@ const Leaderboard = () => {
         </TabsList>
 
         <TabsContent value="weekly">
-          <LeaderboardTable users={leaderboardUsers} />
+          {profile ? <LeaderboardTable users={leaderboardUsers} /> : <DemoLeaderboard />}
         </TabsContent>
 
         <TabsContent value="monthly">
-          <LeaderboardTable users={leaderboardUsers} />
+          {profile ? <LeaderboardTable users={leaderboardUsers} /> : <DemoLeaderboard />}
         </TabsContent>
 
         <TabsContent value="all-time">
-          <LeaderboardTable users={leaderboardUsers} />
+          {profile ? <LeaderboardTable users={leaderboardUsers} /> : <DemoLeaderboard />}
         </TabsContent>
 
         <TabsContent value="badges">
@@ -165,6 +190,77 @@ const LeaderboardTable = ({ users }: { users: typeof leaderboardUsers }) => {
           </div>
         </div>
       ))}
+    </div>
+  );
+};
+
+const DemoLeaderboard = () => {
+  return (
+    <div className="space-y-3">
+      {leaderboardUsers.slice(0, 5).map((user) => (
+        <div
+          key={user.rank}
+          className={`glass-card p-6 rounded-xl hover-lift ${
+            user.rank <= 3 ? "border-2 border-primary/30 bg-primary/5" : ""
+          }`}
+        >
+          <div className="flex items-center gap-4">
+            {/* Rank */}
+            <div className="w-16 text-center">
+              {user.rank === 1 ? (
+                <Trophy className="w-8 h-8 mx-auto text-yellow-400 fill-yellow-400" />
+              ) : user.rank === 2 ? (
+                <Medal className="w-8 h-8 mx-auto text-gray-400 fill-gray-400" />
+              ) : user.rank === 3 ? (
+                <Medal className="w-8 h-8 mx-auto text-orange-400 fill-orange-400" />
+              ) : (
+                <div className="text-2xl font-heading font-bold text-muted-foreground">
+                  {user.rank}
+                </div>
+              )}
+            </div>
+
+            {/* Avatar */}
+            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-primary-glow flex items-center justify-center flex-shrink-0">
+              <span className="text-xl font-bold text-primary-foreground">
+                {user.level}
+              </span>
+            </div>
+
+            {/* Info */}
+            <div className="flex-1">
+              <div className="flex items-center gap-2 mb-1">
+                <span className="font-heading font-bold text-lg">
+                  {user.badge} {user.name}
+                </span>
+              </div>
+              <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                <div className="flex items-center gap-1">
+                  <MapPin className="w-3 h-3" />
+                  <span>{user.city}</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <Flame className="w-3 h-3 text-primary" />
+                  <span>{user.streak} day streak</span>
+                </div>
+              </div>
+            </div>
+
+            {/* XP */}
+            <div className="text-right">
+              <div className="text-2xl font-heading font-bold gradient-text">
+                {user.xp.toLocaleString()}
+              </div>
+              <div className="text-sm text-muted-foreground">XP</div>
+            </div>
+          </div>
+        </div>
+      ))}
+      <div className="text-center py-8">
+        <p className="text-muted-foreground">
+          Sign in to see the full leaderboard and your rank!
+        </p>
+      </div>
     </div>
   );
 };

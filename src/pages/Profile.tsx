@@ -1,6 +1,9 @@
 import { Progress } from "@/components/ui/progress";
-import { Flame } from "lucide-react";
+import { Flame, Trophy, Target } from "lucide-react";
 import { useUserProfile } from "@/hooks/use-user-profile";
+import { calculateLevel, getLevelTitle, getLevelColor } from "@/lib/level-utils";
+import { XPProgress, AnimatedProgress } from "@/components/AnimatedProgress";
+import { motion } from "framer-motion";
 
 const Profile = () => {
   const { profile, loading } = useUserProfile();
@@ -38,24 +41,67 @@ const Profile = () => {
             </p>
             <div className="flex items-center gap-2 mt-2">
               <Flame className="w-4 h-4 text-primary" />
-              <span className="text-primary font-semibold">Welcome back!</span>
+              <span className={`font-semibold ${getLevelColor(profile.level)}`}>
+                {getLevelTitle(profile.level)}
+              </span>
             </div>
           </div>
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="text-center">
-            <div className="text-3xl font-heading font-bold gradient-text">18</div>
+            <div className="text-3xl font-heading font-bold gradient-text">{profile.level}</div>
             <div className="text-sm text-muted-foreground">Level</div>
           </div>
           <div className="text-center">
-            <div className="text-3xl font-heading font-bold gradient-text">8/45</div>
+            <div className="text-3xl font-heading font-bold gradient-text">{profile.xp}</div>
+            <div className="text-sm text-muted-foreground">Total XP</div>
+          </div>
+          <div className="text-center">
+            <div className="text-3xl font-heading font-bold gradient-text">{profile.badges?.length || 0}</div>
             <div className="text-sm text-muted-foreground">Badges</div>
           </div>
           <div className="text-center">
-            <div className="text-3xl font-heading font-bold gradient-text">#127</div>
-            <div className="text-sm text-muted-foreground">Rank</div>
+            <div className="text-3xl font-heading font-bold gradient-text">{profile.completedLessons?.length || 0}</div>
+            <div className="text-sm text-muted-foreground">Lessons</div>
           </div>
+        </div>
+
+        {/* Level Progress */}
+        <motion.div 
+          className="mt-6 p-4 bg-primary/10 rounded-lg"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+        >
+          <XPProgress 
+            currentXP={profile.xp} 
+            level={profile.level}
+            className="w-full"
+          />
+        </motion.div>
+      </div>
+
+      {/* Badges Section */}
+      <div className="glass-card p-8 rounded-xl mb-8">
+        <h2 className="text-2xl font-heading font-bold mb-6 flex items-center gap-2">
+          <Trophy className="w-6 h-6" />
+          Achievements & Badges
+        </h2>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {profile.badges?.length > 0 ? (
+            profile.badges.map((badge, index) => (
+              <div key={index} className="text-center p-4 bg-primary/10 rounded-lg">
+                <div className="text-3xl mb-2">🏆</div>
+                <div className="text-sm font-semibold">Badge {index + 1}</div>
+              </div>
+            ))
+          ) : (
+            <div className="col-span-full text-center py-8">
+              <Target className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
+              <p className="text-muted-foreground">Complete lessons to earn badges!</p>
+            </div>
+          )}
         </div>
       </div>
 

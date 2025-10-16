@@ -5,6 +5,8 @@ import StatCard from "@/components/StatCard";
 import ModuleCard from "@/components/ModuleCard";
 import { modules } from "@/data/modules";
 import heroBg from "@/assets/hero-bg.jpg";
+import { motion } from "framer-motion";
+import { PulseCard, StaggerContainer, StaggerItem } from "@/components/LoadingAnimation";
 import { 
   TrendingUp as TrendingUpIcon, 
   Bitcoin, 
@@ -46,27 +48,68 @@ const Index = () => {
         }}
       >
         <div className="container mx-auto px-4 py-20 text-center relative z-10">
-          <div className="animate-fade-in">
-            <h1 className="text-5xl md:text-7xl font-heading font-bold mb-6 glow-text">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <motion.h1 
+              className="text-5xl md:text-7xl font-heading font-bold mb-6 glow-text"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.8 }}
+            >
               Master Finance. <br />
-              <span className="gradient-text">Level Up Your Wealth.</span>
-            </h1>
-            <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto">
+              <motion.span 
+                className="gradient-text"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.4, duration: 0.8 }}
+              >
+                Level Up Your Wealth.
+              </motion.span>
+            </motion.h1>
+            <motion.p 
+              className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6, duration: 0.8 }}
+            >
               India's First Gamified Platform for Stocks, Crypto, Forex & Options Awareness
-            </p>
-            <div className="flex flex-wrap gap-4 justify-center mb-12">
+            </motion.p>
+            <motion.div 
+              className="flex flex-wrap gap-4 justify-center mb-12"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.8, duration: 0.8 }}
+            >
               <Link to="/learn">
-                <Button size="lg" className="bg-primary hover:bg-primary-glow text-lg gap-2 animate-glow-pulse">
-                  Start Learning <Zap className="w-5 h-5" />
-                </Button>
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Button size="lg" className="bg-primary hover:bg-primary-glow text-lg gap-2 animate-glow-pulse">
+                    Start Learning <Zap className="w-5 h-5" />
+                  </Button>
+                </motion.div>
               </Link>
               <Link to="/leaderboard">
-                <Button size="lg" variant="outline" className="text-lg gap-2 border-primary text-primary hover:bg-primary/10">
-                  View Leaderboard <Award className="w-5 h-5" />
-                </Button>
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Button size="lg" variant="outline" className="text-lg gap-2 border-primary text-primary hover:bg-primary/10">
+                    View Leaderboard <Award className="w-5 h-5" />
+                  </Button>
+                </motion.div>
               </Link>
-            </div>
-            <div className="flex flex-wrap gap-6 justify-center text-sm text-muted-foreground">
+            </motion.div>
+            <motion.div 
+              className="flex flex-wrap gap-6 justify-center text-sm text-muted-foreground"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1, duration: 0.8 }}
+            >
               <div className="flex items-center gap-2">
                 <Users className="w-4 h-4 text-primary" />
                 <span>12,847 Active Learners</span>
@@ -79,43 +122,59 @@ const Index = () => {
                 <Target className="w-4 h-4 text-primary" />
                 <span>89,234 XP Earned Today</span>
               </div>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
       </section>
 
       {/* Stats Dashboard */}
       <section className="container mx-auto px-4 -mt-20 relative z-20 mb-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <StatCard
-            icon={Users}
-            label="Total Users"
-            value="12,847"
-            trend="234 today"
-            trendUp={true}
-          />
-          <StatCard
-            icon={BookOpen}
-            label="Lessons Completed"
-            value="45,892"
-            trend="1,234 today"
-            trendUp={true}
-          />
-          <StatCard
-            icon={Shield}
-            label="Scams Prevented"
-            value="1,249"
-            trend="18 this week"
-            trendUp={true}
-          />
-          <StatCard
-            icon={TrendingUp}
-            label="Average Score"
-            value="87.3%"
-            trend="2.1% ↑"
-            trendUp={true}
-          />
-        </div>
+        <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <StaggerItem>
+            <PulseCard>
+              <StatCard
+                icon={Users}
+                label="Total Users"
+                value="12,847"
+                trend="234 today"
+                trendUp={true}
+              />
+            </PulseCard>
+          </StaggerItem>
+          <StaggerItem>
+            <PulseCard>
+              <StatCard
+                icon={BookOpen}
+                label="Lessons Completed"
+                value="45,892"
+                trend="1,234 today"
+                trendUp={true}
+              />
+            </PulseCard>
+          </StaggerItem>
+          <StaggerItem>
+            <PulseCard>
+              <StatCard
+                icon={Shield}
+                label="Scams Prevented"
+                value="1,249"
+                trend="18 this week"
+                trendUp={true}
+              />
+            </PulseCard>
+          </StaggerItem>
+          <StaggerItem>
+            <PulseCard>
+              <StatCard
+                icon={TrendingUp}
+                label="Average Score"
+                value="87.3%"
+                trend="2.1% ↑"
+                trendUp={true}
+              />
+            </PulseCard>
+          </StaggerItem>
+        </StaggerContainer>
       </section>
 
       {/* Why FinXplore */}

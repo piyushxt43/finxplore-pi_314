@@ -66,7 +66,7 @@ const ModuleCard = ({
 
       <div className="flex items-center justify-between">
         <span className="text-sm text-muted-foreground">{lessonCount} Lessons</span>
-        <Link to={`/learn/${id}`}>
+        <Link to={`/module/${id}`}>
           <Button size="sm" className="bg-primary hover:bg-primary-glow">
             Start Learning
           </Button>

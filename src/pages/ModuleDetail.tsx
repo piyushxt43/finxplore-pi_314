@@ -19,7 +19,8 @@ const ModuleDetail = () => {
     );
   }
 
-  const completedLessons = Math.floor(module.lessons.length * 0.6);
+  // Unlock all lessons for now - users can access any lesson
+  const completedLessons = module.lessons.length;
 
   return (
     <div className="container mx-auto px-4 py-12">
@@ -115,13 +116,15 @@ const ModuleDetail = () => {
                     </div>
                   </div>
                 </div>
-                <Button 
-                  size="sm" 
-                  disabled={isLocked}
-                  className={isCompleted ? "bg-success hover:bg-success/80" : ""}
-                >
-                  {isCompleted ? "Review" : isLocked ? "Locked" : "Start"}
-                </Button>
+                <Link to={`/lesson/${moduleId}/${lesson.id}`}>
+                  <Button 
+                    size="sm" 
+                    disabled={isLocked}
+                    className={isCompleted ? "bg-success hover:bg-success/80" : ""}
+                  >
+                    {isCompleted ? "Review" : isLocked ? "Locked" : "Start"}
+                  </Button>
+                </Link>
               </div>
             </div>
           );
