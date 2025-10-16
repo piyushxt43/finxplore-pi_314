@@ -87,8 +87,8 @@ Fin Quest India is a comprehensive financial education platform designed specifi
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/piyushxt43/fin-quest-india-main.git
-cd fin-quest-india-main
+git clone https://github.com/piyushxt43/finxplore-pi_314.git
+cd finxplore-pi_314
 ```
 
 2. **Install dependencies**
@@ -225,10 +225,10 @@ src/
 ## 🚀 Deployment
 
 ### Quick Deploy to Vercel
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/piyushxt43/fin-quest-india-main)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/piyushxt43/finxplore-pi_314)
 
 ### Quick Deploy to Netlify
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/piyushxt43/fin-quest-india-main)
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/piyushxt43/finxplore-pi_314)
 
 ### Manual Deployment
 

@@ -5,7 +5,7 @@
   "description": "Master Financial Markets with Interactive Learning & Gamification",
   "keywords": ["finance", "education", "trading", "stocks", "crypto", "india", "react", "typescript"],
   "author": "Piyush",
-  "homepage": "https://fin-quest-india.vercel.app",
+  "homepage": "https://finxplore-pi-314.vercel.app",
   "type": "module",
   "scripts": {
     "dev": "vite",
