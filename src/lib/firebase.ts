@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
+import { getAnalytics, isSupported } from "firebase/analytics";
 
 // Firebase configuration - all values should come from environment variables
 const firebaseConfig = {
@@ -29,5 +30,10 @@ export const googleProvider = new GoogleAuthProvider();
 // Ensure the Google account chooser is shown each time
 googleProvider.setCustomParameters({ prompt: "select_account" });
 export const db = getFirestore(app);
+
+// Initialize Analytics (only in browser environment and if supported)
+export const analytics = typeof window !== 'undefined' && isSupported() 
+  ? getAnalytics(app) 
+  : null;
 
 
