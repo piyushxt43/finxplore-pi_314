@@ -225,43 +225,81 @@ src/
 - **Local State**: React Query for caching
 - **Static Content**: TypeScript interfaces for type safety
 
-## 🚀 Deployment
+## 🚀 Production Deployment
 
-### Quick Deploy to Vercel
+### 🎯 Quick Deploy (Recommended)
+
+#### Deploy to Vercel
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/piyushxt43/finxplore-pi_314)
 
-### Quick Deploy to Netlify
+#### Deploy to Netlify
 [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/piyushxt43/finxplore-pi_314)
 
-### Manual Deployment
+### 📋 Pre-Deployment Checklist
 
-#### Vercel
+Before deploying, ensure you have:
+
+1. **Firebase Project Setup**
+   - [ ] Firebase project created
+   - [ ] Authentication enabled (Google provider)
+   - [ ] Firestore database created
+   - [ ] Security rules configured
+
+2. **Environment Variables**
+   - [ ] Copy `.env.example` to `.env.local`
+   - [ ] Configure all Firebase variables
+   - [ ] Test locally with `npm run dev`
+
+3. **Local Testing**
+   - [ ] Run `npm run build` successfully
+   - [ ] Test production build with `npm run preview`
+   - [ ] Verify all features work
+
+### 🔧 Required Environment Variables
+
+Set these in your hosting platform's environment variables section:
+
 ```bash
-npm run build
-npm run deploy:vercel
-```
-
-#### Netlify
-```bash
-npm run build
-npm run deploy:netlify
-```
-
-### 📖 Detailed Deployment Guide
-For complete deployment instructions, environment setup, and troubleshooting, see [DEPLOYMENT.md](./DEPLOYMENT.md)
-
-### 🔧 Environment Variables Required
-Before deploying, set these environment variables in your hosting platform:
-
-```bash
-VITE_FIREBASE_API_KEY=your_api_key
+# Firebase Configuration (Required)
+VITE_FIREBASE_API_KEY=your_firebase_api_key
 VITE_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
-VITE_FIREBASE_PROJECT_ID=your_project_id
+VITE_FIREBASE_PROJECT_ID=your_firebase_project_id
 VITE_FIREBASE_STORAGE_BUCKET=your_project.appspot.com
-VITE_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
-VITE_FIREBASE_APP_ID=your_app_id
+VITE_FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
+VITE_FIREBASE_APP_ID=your_firebase_app_id
 VITE_FIREBASE_MEASUREMENT_ID=your_measurement_id
+
+# Optional: Analytics & Monitoring
+VITE_GOOGLE_ANALYTICS_ID=your_google_analytics_id
+VITE_SENTRY_DSN=your_sentry_dsn
 ```
+
+### 📖 Complete Deployment Guides
+
+- **[DEPLOYMENT.md](./DEPLOYMENT.md)** - Step-by-step deployment instructions
+- **[DEPLOYMENT_CHECKLIST.md](./DEPLOYMENT_CHECKLIST.md)** - Comprehensive pre-deployment checklist
+
+### 🚀 Deployment Commands
+
+```bash
+# Build and deploy to Vercel
+npm run deploy:build
+
+# Build and deploy to Netlify
+npm run build && npm run deploy:netlify
+
+# Test production build locally
+npm run build && npm run preview
+```
+
+### 🔒 Security & Performance
+
+This project includes:
+- ✅ Security headers configured
+- ✅ Asset caching optimized
+- ✅ Firebase security rules
+- ✅ Environment variable validation
+- ✅ Production build optimization
 
 ## 🤝 Contributing
 

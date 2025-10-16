@@ -11,10 +11,15 @@
     "dev": "vite",
     "build": "vite build",
     "build:dev": "vite build --mode development",
+    "build:analyze": "vite build --mode analyze",
     "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "preview": "vite preview",
     "deploy:vercel": "vercel --prod",
-    "deploy:netlify": "netlify deploy --prod --dir=dist"
+    "deploy:netlify": "netlify deploy --prod --dir=dist",
+    "deploy:build": "npm run build && npm run deploy:vercel",
+    "type-check": "tsc --noEmit",
+    "test": "echo \"No tests specified\" && exit 0"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
