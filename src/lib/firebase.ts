@@ -30,9 +30,14 @@ if (missingConfigKeys.length > 0) {
 const app = initializeApp(firebaseConfig);
 
 export const auth = getAuth(app);
+
+// Configure Google provider with proper settings
 export const googleProvider = new GoogleAuthProvider();
-// Ensure the Google account chooser is shown each time
-googleProvider.setCustomParameters({ prompt: "select_account" });
+googleProvider.addScope('email');
+googleProvider.addScope('profile');
+// Remove the problematic prompt parameter that can cause auth issues
+// googleProvider.setCustomParameters({ prompt: "select_account" });
+
 export const db = getFirestore(app);
 
 // Initialize Analytics (only in browser environment and if supported)

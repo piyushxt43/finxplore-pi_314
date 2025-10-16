@@ -47,20 +47,35 @@ const Navigation = () => {
 
   const handleSignIn = async () => {
     try {
-      await signInWithPopup(auth, googleProvider);
-    } catch (error) {
-      // If popup fails (blocked or disallowed), fall back to redirect
-      const message = (error as { code?: string }).code ?? "";
-      const isPopupIssue = message.includes("popup") || message.includes("blocked");
-      if (isPopupIssue) {
+      console.log("Starting Google sign-in...");
+      
+      // Try popup first
+      const result = await signInWithPopup(auth, googleProvider);
+      console.log("Sign-in successful:", result.user);
+      
+    } catch (error: any) {
+      console.error("Sign-in error:", error);
+      
+      // Handle specific error cases
+      if (error.code === 'auth/popup-blocked') {
+        console.log("Popup blocked, trying redirect...");
         try {
           await signInWithRedirect(auth, googleProvider);
           return;
         } catch (redirectError) {
-          console.error("Sign-in redirect failed", redirectError);
+          console.error("Redirect also failed:", redirectError);
+          alert("Please allow popups for this site or try again.");
         }
+      } else if (error.code === 'auth/popup-closed-by-user') {
+        console.log("User closed popup");
+        // Don't show error for user closing popup
+        return;
+      } else if (error.code === 'auth/cancelled-popup-request') {
+        console.log("Popup request cancelled");
+        return;
       } else {
-        console.error("Sign-in failed", error);
+        console.error("Other sign-in error:", error);
+        alert("Sign-in failed. Please try again.");
       }
     }
   };
